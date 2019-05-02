@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% set image = "assets/img/faces/placeholder.jpg" %}
+
+{% if person.image is defined %}
+    {% set image = 'uploads/images/' ~ person.image.fileName %}
+{% endif %}
+
+{% block title %}
+    {{ person.firstName }} | Profile
+{% endblock %}
+
+{% block body %}
+    <div class="col-6">
+        <div class="card card-profile">
+            <div class="card-avatar">
+                <a href="#">
+                    <img class="img" src="{{ asset(image) }}">
+                </a>
+            </div>
+            <div class="card-body">
+                <h4 class="card-title">{{ person.firstName }} {{ person.lastName }}</h4>
+                <div class="row">
+
+                    <div class="col-12 text-left">
+                        <span class="text-gray font-weight-bold">Email:</span>
+                        <span>{{ person.email }}</span>
+                    </div>
+
+                    <div class="col-12 text-left">
+                        <span class="text-gray font-weight-bold">Birthday:</span>
+                        <span>{{ person.birthDay }}</span>
+                    </div>
+
+                    <div class="col-12 text-left">
+                        <span class="text-gray font-weight-bold">Phone Number:</span>
+                        <span>{{ person.prefix }} - {{ person.phoneNumber }}</span>
+                    </div>
+
+                    <div class="col-12 text-left">
+                        <span class="text-gray font-weight-bold">Country:</span>
+                        <span>{{ person.city.country }}</span>
+                    </div>
+
+                    <div class="col-12 text-left">
+                        <span class="text-gray font-weight-bold">Zip:</span>
+                        <span>{{ person.city.zip }}</span>
+                    </div>
+
+                    <div class="col-12 text-left">
+                        <span class="text-gray font-weight-bold">City:</span>
+                        <span>{{ person.city }}</span>
+                    </div>
+
+                    <div class="col-12 text-left">
+                        <span class="text-gray font-weight-bold">Address:</span>
+                        <span>{{ person.address }}</span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+
+{% endblock %}

@@ -1,0 +1,11 @@
+<a href="{{ url('contact_edit', {'id': row.id}) }}" class="btn btn-link btn-info btn-just-icon">
+    <i class="material-icons">edit</i>
+</a>
+
+<a href="{{ url('contact_show', {'id': row.id}) }}" class="btn btn-link btn-info btn-just-icon">
+    <i class="material-icons">chat</i>
+</a>
+
+<a href="#" class="btn btn-link btn-info btn-just-icon" onclick="deletePerson({{ row.id }})">
+    <i class="material-icons">clear</i>
+</a>

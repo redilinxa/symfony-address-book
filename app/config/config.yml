@@ -41,22 +41,22 @@ twig:
 # Doctrine Configuration
 doctrine:
     dbal:
-      driver: pdo_sqlite
-      path: '%kernel.project_dir%/addressbook.db'
-      charset: UTF8
+        driver: pdo_sqlite
+        path: '%kernel.project_dir%/database/addressbook.sqlite'
+        charset: UTF8
 
     orm:
-      auto_generate_proxy_classes: '%kernel.debug%'
-      naming_strategy: doctrine.orm.naming_strategy.underscore
-      auto_mapping: true
-      mappings:
-        AppBundle:
-          is_bundle: false
-          type: annotation
-          dir: '%kernel.project_dir%/src/AppBundle/Domain/Entity'
-          prefix: 'AppBundle\Domain\Entity'
-          alias: AppBundle
-          mapping: true
+        auto_generate_proxy_classes: '%kernel.debug%'
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true
+        mappings:
+            AppBundle:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src/AppBundle/Domain/Entity'
+                prefix: 'AppBundle\Domain\Entity'
+                alias: AppBundle
+                mapping: true
 
 
 # Swiftmailer Configuration
@@ -70,3 +70,34 @@ swiftmailer:
 sensio_framework_extra:
    router:
         annotations: false
+
+
+datatables:
+
+    # Load i18n data from DataTables CDN or locally
+    language_from_cdn:    true
+
+    # Default HTTP method to be used for callbacks
+    method:               POST # One of "GET"; "POST"
+
+
+    # Where to persist the current table state automatically
+    persist_state:        none # One of "none"; "query"; "fragment"; "local"; "session"
+
+    # Default service used to render templates, built-in TwigRenderer uses global Twig environment
+    renderer:             Omines\DataTablesBundle\Twig\TwigRenderer
+
+    # Default template to be used for DataTables HTML
+    template:             '@DataTables/datatable_html.html.twig'
+
+    # Default parameters to be passed to the template
+    template_parameters:
+
+        # Default class attribute to apply to the root table elements
+        className:        'table table-striped table-no-bordered table-hover dataTable dtr-inline'
+
+        # If and where to enable the DataTables Filter module
+        columnFilter:     null # One of "thead"; "tfoot"; "both"; null
+
+    # Default translation domain to be used
+    translation_domain:   messages

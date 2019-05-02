@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    List
+{% endblock %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-header card-header-primary">
+            <h4 class="card-title ">Users list</h4>
+            <p class="card-category">Find users on list</p>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <div id="datatables">Loading...</div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    <style media="screen" type="text/css">
+        td {
+            max-width: 120px;
+            word-wrap: break-word;
+            word-break: break-all;
+            white-space: normal;
+        }
+    </style>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ asset('bundles/datatables/js/datatables.js') }}"></script>
+    <script>
+        $(function() {
+            $('#datatables').initDataTables({{ datatable_settings(datatable) }}, {
+                searching: true,
+                "pagingType": "full_numbers",
+                "lengthMenu": [
+                    [10, 25, 50, -1],
+                    [10, 25, 50, "All"]
+                ],
+                responsive: true,
+                language: {
+                    search: "_INPUT_",
+                    searchPlaceholder: "Search records",
+                },
+                processing: true,
+            });
+        });
+
+
+        function deletePerson(user) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#9325a5',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.value) {
+                    performAjax("POST", "{{ url('contact_delete') }}", {user : user})
+                        .then(res => {
+                        if(res.success){
+                            Swal.fire(
+                                'Deleted!',
+                                'Your file has been deleted.',
+                                'success'
+                            );
+
+                            $("#" + user).remove();
+                        }
+                    });
+                }
+            })
+        }
+
+        async function performAjax(method, url, data) {
+            let promise = new Promise((resolve) => {
+                $.ajax({
+                    method: method,
+                    url: url,
+                    data: data,
+                    success: function (response) {
+                        resolve(response);
+                    }
+                })
+            });
+            return await promise;
+        }
+    </script>
+
+{% endblock %}

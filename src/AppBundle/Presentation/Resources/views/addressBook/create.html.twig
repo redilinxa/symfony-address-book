@@ -1,0 +1,143 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Add new record
+{% endblock %}
+
+{% block body %}
+    {{ form_start(form, { 'attr': {'id': 'RegisterValidation', 'class': 'form-horizontal'} }) }}
+    <div class="row">
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header card-header-primary card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">mail_outline</i>
+                    </div>
+                    <h4 class="card-title">Register Form</h4>
+                </div>
+                <div class="card-body">
+
+                    <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                        <div class="fileinput-new thumbnail img-circle">
+                            <img src="{{ asset('assets/img/faces/placeholder.jpg') }}">
+                        </div>
+
+                        <div class="fileinput-preview fileinput-exists thumbnail img-circle"></div>
+
+                        <div>
+                            <span class="btn btn-round btn-rose btn-file">
+                                <span class="fileinput-new">Add Photo</span>
+                                <span class="fileinput-exists">Change</span>
+                                {{ form_widget(form.image, {'attr' : {'class': 'form-control', 'required': 'true'}}) }}
+                            </span>
+
+                            <br/>
+                            <a href="#" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput">
+                                <i class="fa fa-times"></i>Remove
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="form-group bmd-form-group">
+                        {{ form_label(form.firstName, 'First Name *',  {'attr' : {'class': 'bmd-label-floating'} }) }}
+                        {{ form_widget(form.firstName, {'attr' : {'class': 'form-control', 'required': 'true'}}) }}
+                    </div>
+
+                    <div class="form-group bmd-form-group">
+                        {{ form_label(form.lastName, 'Last Name *',  {'attr' : {'class': 'bmd-label-floating'} }) }}
+                        {{ form_widget(form.lastName, {'attr' : {'class': 'form-control', 'required': 'true'}}) }}
+                    </div>
+
+                    <div class="form-group bmd-form-group">
+                        {{ form_label(form.email, 'Email *',  {'attr' : {'class': 'bmd-label-floating'} }) }}
+                        {{ form_widget(form.email, {'attr' : {'class': 'form-control', 'required': 'true', 'type':'email'}}) }}
+                    </div>
+
+                    <div class="form-group bmd-form-group">
+                        {{ form_label(form.birthday, 'Birthday *',  {'attr' : {'class': 'bmd-label-floating'} }) }}
+                        {{ form_widget(form.birthday, {'attr' : {'class': 'form-control datepicker birthday', 'required': 'true'}}) }}
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header card-header-primary card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">phone</i>
+                    </div>
+                    <h4 class="card-title">Phone</h4>
+                </div>
+                <div class="card-body">
+                    <div class="form-group bmd-form-group">
+                        <div class="row">
+                            <div class="col-3">
+                                {{ form_label(form.prefix, 'EXT *',  {'attr' : {'class': 'bmd-label-floating'} }) }}
+                                {{ form_widget(form.prefix, {'attr' : {'class': 'form-control', 'required': 'true'}}) }}
+                            </div>
+
+                            <div class="col-9">
+                                {{ form_label(form.phoneNumber, 'Number *',  {'attr' : {'class': 'bmd-label-floating'} }) }}
+                                {{ form_widget(form.phoneNumber, {'attr' : {'class': 'form-control', 'required': 'true'}}) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header card-header-primary card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">map</i>
+                    </div>
+                    <h4 class="card-title">Phone</h4>
+                </div>
+                <div class="card-body">
+                    <div class="form-group bmd-form-group">
+                        {{ form_widget(form.city, {'attr' : {'class': 'selectpicker', 'data-size': '7', 'data-style': 'btn btn-primary btn-round', 'title':'Select City'}}) }}
+                    </div>
+
+                    <div class="form-group bmd-form-group">
+                        {{ form_label(form.address, 'Address *',  {'attr' : {'class': 'bmd-label-floating'} }) }}
+                        {{ form_widget(form.address, {'attr' : {'class': 'form-control', 'required': 'true'}}) }}
+                    </div>
+
+                    <div class="form-group bmd-form-group">
+                        {{ form_widget(form.save, {'attr' : {'class': 'btn btn-fill btn-primary'}}) }}
+                        <a href="{{ url('contact_list') }}" class="btn btn-fill btn-primary">Return to list</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ form_end(form) }}
+
+
+{% endblock %}
+
+{% block srcipts %}
+    <script>
+
+        $(document).ready(function () {
+            setFormValidation('#RegisterValidation');
+        });
+
+        function setFormValidation(id) {
+            $(id).validate({
+                highlight: function (element) {
+                    $(element).closest('.form-group').removeClass('has-success').addClass('has-danger');
+                    $(element).closest('.form-check').removeClass('has-success').addClass('has-danger');
+                },
+                success: function (element) {
+                    $(element).closest('.form-group').removeClass('has-danger').addClass('has-success');
+                    $(element).closest('.form-check').removeClass('has-danger').addClass('has-success');
+                },
+                errorPlacement: function (error, element) {
+                    $(element).closest('.form-group').append(error);
+                },
+            });
+        }
+
+    </script>
+{% endblock %}
